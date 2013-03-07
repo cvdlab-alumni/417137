@@ -1,0 +1,15 @@
+<html>
+<head>
+	<title>Learning javascript</title>
+</head>
+<body>
+<script src="exercise01.js">
+</script>
+<script>
+console.log("\n");
+</script>
+<script src="exercise02.js">
+</script>
+
+</body>
+</html>
