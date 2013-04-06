@@ -7,3 +7,14 @@ filterRes.push( data.filter(function(item){
 }
 return filterRes;
 }
+
+
+function select(data, key, values){
+filterRes=[];
+for(i=0;i<values.length;i++){
+filterRes.concat.push( data.filter(function(item){
+ return (item[key]===values[i]);
+}));
+}
+return filterRes;
+}
