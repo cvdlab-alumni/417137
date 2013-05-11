@@ -1,0 +1,110 @@
+#volante
+
+
+def circl (sel,r,altezza):
+	def circle0 (p):
+		return [ r * COS(sel(p)), r * SIN(sel(p)), altezza ]; 
+	return circle0
+
+#mettici un toro o un anello
+c=circl(S1,3,1)
+co=BEZIER(S1)([c])
+ma=MAP(co)(Plasm.power(INTERVALS(2*PI)(32),INTERVALS(1)(1)))
+
+
+
+
+
+
+c1=circl(S1,2.5,1)
+co1=BEZIER(S1)([c1])
+ma2=MAP(co1)(Plasm.power(INTERVALS(2*PI)(32),INTERVALS(1)(1)))
+
+#curva superiore
+controls100=(MAP(BEZIER(S1)([[0.232,-0.542],[0.434,-0.412],[0.590,-0.416]]))(INTERVALS(1)(64)))
+controls100p=((BEZIER(S1)([[0.232,-0.542],[0.434,-0.412],[0.590,-0.416]])))
+
+#curva superiore specchiata
+controls100_1=S(1)(-1)(controls100)
+controls100_1=T(1)(0.590*2)(controls100_1)
+
+#curva laterale
+controls101=(MAP(BEZIER(S1)([[0.230,-0.682,0.1],[0.316,-0.564,0.1],[0.396,-0.672,0.1],[0.416,-0.75,0.1],[0.464,-0.82,0.1],[0.506,-0.896,0.1],[0.512,-0.97,0.1]]))(INTERVALS(1)(64)))
+controls101p=((BEZIER(S1)([[0.230,-0.682,0.1],[0.316,-0.564,0.1],[0.396,-0.672,0.1],[0.416,-0.75,0.1],[0.464,-0.82,0.1],[0.506,-0.896,0.1],[0.512,-0.97,0.1]])))
+
+#curva laterale specchiata
+controls102=S(1)(-1)(controls101)
+controls102=T(1)(0.590*2)(controls102)
+
+#mezzo volante
+C0 = BEZIER(S1)([[0,0,0],[10,0,0]])
+C1 = BEZIER(S1)([[0,2,0],[8,3,0],[9,2,0]])
+C2 = BEZIER(S1)([[0,4,1],[7,5,-1],[8,5,1],[12,4,0]])
+C3 = BEZIER(S1)([[0,6,0],[9,6,3],[10,6,-1]])
+out = MAP(BEZIER(S2)([controls100p,controls101p]))(  Plasm.power(INTERVALS(1)(30),INTERVALS(1)(30))  )
+
+#mezzo volante specchiato
+out2=S(1)(-1)(out)
+out2=T(1)(0.590*2)(out2)
+
+
+
+#triangolo centrale
+#C2 = BEZIER(S1)([[0.512,-0.97,0.1],[0.59,-0.97,0.1]])
+#C3 = BEZIER(S1)([[0.668,-0.97,0.1],[0.590,-0.416,0.1]])
+#C4 = BEZIER(S1)([[0.512,-0.97,0.1],[0.590,-0.416,0.1]])
+#C5= BEZIER(S1)([[0.59,-0.97,0.1],[0.668,-0.416,0.1]])
+
+#out3=MAP(COONSPATCH([C2,C3,C4,C5]))(Plasm.power(INTERVALS(1)(10),INTERVALS(1)(10)))
+
+C4 = BEZIER(S1)([[0.512,-0.97],[0.668,-0.97]])
+C5 = BEZIER(S1)([[0.590,-0.416]])
+
+
+out3=MAP(BEZIER(S2)([C4,C5]))(Plasm.power(INTERVALS(1)(50),INTERVALS(1)(50)))
+#coons
+
+
+
+
+
+
+volanteInt=(STRUCT([out,out2,out3]))
+
+volanteInt=MULTEXTRUDE(volanteInt)(0.2)
+
+
+
+volanteInt=S(3)(0.5)(volanteInt)
+
+
+volanteInt=T(1)(-0.23-0.156-0.17-0.05)(volanteInt)
+volanteInt=T(2)(0.8)(volanteInt)
+volanteInt=S([1,2])([2.5,2.5])(volanteInt)
+volanteInt=T(2)(-0.5)(volanteInt)
+volanteInt=T(3)(-0.03)(volanteInt)
+volanteInt=T(1)(0.03)(volanteInt)
+
+volanteInt=COLOR(BLACK)(volanteInt)
+
+esternoVol=COLOR(BLACK)(TORUS([0.8,1])([30,30]))
+
+
+
+VIEW(STRUCT([volanteInt,esternoVol]))
+
+
+
+#VIEW(out)
+
+
+
+#VIEW(STRUCT([controls100,controls101,controls102,controls100_1]))
+
+
+
+#VIEW(ma)
+
+
+
+
